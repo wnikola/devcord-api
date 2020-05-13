@@ -13,8 +13,18 @@ const registrationSchema = Joi.object({
     .required()
 });
 
+const roomSchema = Joi.object({
+  name: Joi.string()
+    .min(3)
+    .max(30)
+    .required(),
+  owner: Joi.string()
+    .required()
+});
+
 const Validate = schema => data => schema.validate(data);
 
 module.exports = {
-  registrationValidation: Validate(registrationSchema)
+  registrationValidation: Validate(registrationSchema),
+  roomValidation: Validate(roomSchema)
 };

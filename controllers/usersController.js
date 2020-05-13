@@ -13,11 +13,11 @@ const register = async (req, res) => {
   const { error } = registrationValidation(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
-  // Check if the email already exists
+  // Check whether the email already exists
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) return res.status(400).json({ success: false, message: 'Email already registered' });
 
-  // Check if the username already exists
+  // Check whether the username already exists
   const usernameExists = await User.findOne({ username: req.body.username });
   if (usernameExists) return res.status(400).json({ success: false, message: 'Username already taken' });
 
@@ -54,6 +54,7 @@ const login = async (req, res) => {
 
     if (!result) return res.status(400).json({ success: false, message: 'Wrong password' });
 
+    // Generate a token
     const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
     return res.status(200).json({ message: 'Logged in', accessToken: accessToken });
   });
