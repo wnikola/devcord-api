@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "develop": "nodemon server.js"
   },
   "author": "Nikola Mihajlovic",
   "license": "GPL-3.0-or-later",
@@ -17,7 +18,9 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.12",
-    "nodemon": "^2.0.3",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
