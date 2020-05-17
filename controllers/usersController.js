@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const { registrationValidation } = require('../utils/validation');
 const User = require('../models/User');
+const Room = require('../models/Room');
 
 const saltRounds = 10;
 
@@ -60,7 +61,24 @@ const login = async (req, res) => {
   });
 };
 
+const getUsersRooms = async (req, res) => {
+  // Check if the user exists
+  const user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+
+  // Get the rooms
+  const rooms = user.rooms;
+
+  for (let i = 0; i < rooms.length; i++) {
+    const room = await Room.findOne({ _id: rooms[i] });
+    rooms[i] = room.name;
+  }
+
+  return res.status(200).json({ success: true, rooms: rooms });
+}
+
 module.exports = {
   register,
-  login
+  login,
+  getUsersRooms
 };

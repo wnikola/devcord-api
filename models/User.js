@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     select: false
-  }
+  },
+  rooms: Array
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
