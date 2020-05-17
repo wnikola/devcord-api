@@ -22,9 +22,35 @@ const roomSchema = Joi.object({
     .required()
 });
 
+const joinRoomSchema = Joi.object({
+  room: Joi.string()
+    .required(),
+  username: Joi.string()
+    .required()
+});
+
+const deleteRoomSchema = Joi.object({
+  room: Joi.string()
+    .required(),
+  username: Joi.string()
+    .required()
+});
+
+const messageSchema = Joi.object({
+  from: Joi.string()
+    .required(),
+  to: Joi.string()
+    .required(),
+  message: Joi.string()
+    .required()
+})
+
 const Validate = schema => data => schema.validate(data);
 
 module.exports = {
   registrationValidation: Validate(registrationSchema),
-  roomValidation: Validate(roomSchema)
+  roomValidation: Validate(roomSchema),
+  joinRoomValidation: Validate(joinRoomSchema),
+  deleteRoomValidation: Validate(deleteRoomSchema),
+  messageValidation: Validate(messageSchema)
 };
