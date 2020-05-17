@@ -34,7 +34,7 @@ const createRoom = async (req, res) => {
 
   room.save((err, room) => {
     if (err) return console.error(err);
-    return res.status(200).json(room);
+    return res.status(200).json({ succes: true, room: room });
   });
 };
 
