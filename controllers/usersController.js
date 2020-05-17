@@ -38,7 +38,7 @@ const register = async (req, res) => {
 
       user = user.toObject();
       delete user.password;
-      return res.status(200).json(user);
+      return res.status(200).json({ success: true, user: user });
     });
   });
 };
@@ -57,7 +57,7 @@ const login = async (req, res) => {
 
     // Generate a token
     const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
-    return res.status(200).json({ message: 'Logged in', accessToken: accessToken, username: user.username });
+    return res.status(200).json({ success: true, message: 'Logged in', accessToken: accessToken, username: user.username });
   });
 };
 
