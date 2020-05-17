@@ -20,7 +20,7 @@ const createRoom = async (req, res) => {
 
   // Check whether the owner exists
   const owner = await User.findOne({ username: req.body.owner });
-  if (!owner) return res.status(400).json({ success: false });
+  if (!owner) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
 
   // Get the owner id
   const ownerId = owner._id;
