@@ -169,7 +169,7 @@ Example response:
 
 ```json
 {
-  "succes": true,
+  "success": true,
   "room": {
     "members": [
       "5ec0910e1d052fg024e852af"

@@ -36,9 +36,9 @@ const register = async (req, res) => {
     user.save((err, user) => {
       if (err) return console.error(err);
 
-      user = user.toObject();
-      delete user.password;
-      return res.status(200).json({ success: true, user: user });
+      // Generate a token
+      const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
+      return res.status(200).json({ success: true, accessToken: accessToken, username: user.username });
     });
   });
 };
