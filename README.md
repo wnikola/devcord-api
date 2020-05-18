@@ -1,6 +1,6 @@
 # Devcord API
 
-A chat REST API
+A messaging REST API
 
 Stack:
 
