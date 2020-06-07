@@ -82,7 +82,9 @@ Example response:
 
 Method: GET
 
-URL: <https://dev-cord.herokuapp.com/api/users/rooms/user>
+URL: <https://dev-cord.herokuapp.com/api/users/rooms>
+
+Expects a JSON Web Token in the Auth header as bearer token
 
 Example response:
 
@@ -156,6 +158,8 @@ Method: POST
 
 URL: <https://dev-cord.herokuapp.com/api/rooms>
 
+Expects a JSON Web Token in the Auth header as bearer token
+
 Example request body:
 
 ```json
@@ -190,6 +194,8 @@ Method: PUT
 
 URL: <https://dev-cord.herokuapp.com/api/rooms>
 
+Expects a JSON Web Token in the Auth header as bearer token
+
 Example request body:
 
 ```json
@@ -213,6 +219,8 @@ Example response:
 Method: DELETE
 
 URL: <https://dev-cord.herokuapp.com/api/rooms>
+
+Expects a JSON Web Token in the Auth header as bearer token
 
 Example request body:
 
@@ -239,6 +247,8 @@ Example response:
 Method: POST
 
 URL: <https://dev-cord.herokuapp.com/api/messages>
+
+Expects a JSON Web Token in the Auth header as bearer token
 
 Example request body:
 
@@ -271,7 +281,9 @@ Example response:
 
 Method: GET
 
-URL: <https://dev-cord.herokuapp.com/api/messages/received/user>
+URL: <https://dev-cord.herokuapp.com/api/messages/received>
+
+Expects a JSON Web Token in the Auth header as bearer token
 
 Example response:
 
@@ -292,7 +304,9 @@ Example response:
 
 Method: GET
 
-URL: <https://dev-cord.herokuapp.com/api/messages/sent/user1>
+URL: <https://dev-cord.herokuapp.com/api/messages/sent>
+
+Expects a JSON Web Token in the Auth header as bearer token
 
 Example response:
 

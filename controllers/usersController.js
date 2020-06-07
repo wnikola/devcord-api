@@ -37,7 +37,7 @@ const register = async (req, res) => {
       if (err) return console.error(err);
 
       // Generate a token
-      const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
+      const accessToken = jwt.sign({ sub: user._id, iat: Date.now() }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
       return res.status(200).json({ success: true, accessToken: accessToken, username: user.username });
     });
   });
@@ -56,15 +56,14 @@ const login = async (req, res) => {
     if (!result) return res.status(400).json({ success: false, message: 'Wrong password' });
 
     // Generate a token
-    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign({ sub: user._id, iat: Date.now() }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
     return res.status(200).json({ success: true, message: 'Logged in', accessToken: accessToken, username: user.username });
   });
 };
 
 const getUsersRooms = async (req, res) => {
-  // Check if the user exists
-  const user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const user = req.user;
 
   // Get the rooms
   const rooms = user.rooms;

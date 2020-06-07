@@ -18,9 +18,8 @@ const createRoom = async (req, res) => {
   const roomExists = await Room.findOne({ name: req.body.name });
   if (roomExists) return res.status(400).json({ success: false, message: 'Room already exists' });
 
-  // Check whether the owner exists
-  const owner = await User.findOne({ username: req.body.owner });
-  if (!owner) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const owner = req.user;
 
   // Get the owner id
   const ownerId = owner._id;
@@ -47,9 +46,8 @@ const joinRoom = async (req, res) => {
   const room = await Room.findOne({ name: req.body.room });
   if (!room) return res.status(400).json({ success: false, message: 'Room doesn\'t exist' });
 
-  // Check whether the user exists
-  const user = await User.findOne({ username: req.body.username });
-  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const user = req.user;
 
   // Check whether the user is already in the room
   const userInTheRoom = room.members.find(member => member.equals(user._id));
@@ -79,9 +77,10 @@ const deleteRoom = async (req, res) => {
   const room = await Room.findOne({ name: req.body.room });
   if (!room) return res.status(400).json({ success: false, message: 'Room doesn\'t exist' });
 
-  // Check whether the user exists and has deletion privileges
-  const user = await User.findOne({ username: req.body.username });
-  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const user = req.user;
+
+  // Check whether the user has deletion privileges
   if (!user._id.equals(room.owner)) return res.status(403).json({ success: false, message: 'User doesn\'t have deletion privileges' });
 
   // Delete the room

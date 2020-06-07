@@ -8,9 +8,8 @@ const sendAMessage = async (req, res) => {
   const { error } = messageValidation(req.body);
   if (error) return res.status(400).json(error.details[0].message);
 
-  // Check whether the users exist
-  const sender = await User.findOne({ username: req.body.from });
-  if (!sender) return res.status(400).json({ success: false, message: 'Sender doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const sender = req.user;
 
   const recipient = await User.findOne({ username: req.body.to }) || await Room.findOne({ name: req.body.to });
   if (!recipient) return res.status(400).json({ success: false, message: 'Recipient doesn\'t exist' });
@@ -29,21 +28,12 @@ const sendAMessage = async (req, res) => {
 };
 
 const getReceivedMessages = async (req, res) => {
-  // Check whether the user exists
-  const user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const user = req.user;
 
   // Get the messages
   let messages = await Message.find({ to: user._id });
-  // messages = messages.map(async message => {
-  //   const sender = await User.findOne({ _id: message.from });
-  //   const parsed = {
-  //     from: sender.username,
-  //     message: message.message,
-  //     createdAt: message.createdAt
-  //   };
-  //   return parsed;
-  // });
+
   for (let i = 0; i < messages.length; i++) {
     const sender = await User.findOne({ _id: messages[i].from });
     const message = {
@@ -57,17 +47,16 @@ const getReceivedMessages = async (req, res) => {
 };
 
 const getSentMessages = async (req, res) => {
-  // Check whether the user exists
-  const user = await User.findOne({ username: req.params.username });
-  if (!user) return res.status(400).json({ success: false, message: 'User doesn\'t exist' });
+  // User gets passed to the request object by passport
+  const user = req.user;
 
   // Get the messages
   let messages = await Message.find({ from: user._id });
 
   for (let i = 0; i < messages.length; i++) {
-    const recipient = await User.findOne({ _id: messages[i].to });
+    const recipient = await User.findOne({ _id: messages[i].to }) || await Room.findOne({ _id: messages[i].to });
     const message = {
-      to: recipient.username,
+      to: recipient.username || recipient.name,
       message: messages[i].message,
       sentAt: messages[i].createdAt
     };

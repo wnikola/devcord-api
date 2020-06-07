@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const { getRooms, getRoomMembers, createRoom, joinRoom, deleteRoom } = require('../controllers/roomController');
 
@@ -11,12 +12,12 @@ router.get('/', getRooms);
 router.get('/:room', getRoomMembers);
 
 // Make a new room
-router.post('/', createRoom);
+router.post('/', passport.authenticate('jwt', { session: false }), createRoom);
 
 // Add user to a room
-router.put('/', joinRoom);
+router.put('/', passport.authenticate('jwt', { session: false }), joinRoom);
 
 // Delete a room
-router.delete('/', deleteRoom);
+router.delete('/', passport.authenticate('jwt', { session: false }), deleteRoom);
 
 module.exports = router;

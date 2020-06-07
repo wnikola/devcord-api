@@ -2,14 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require('passport');
 
+const passportConfig = require('./config/passport');
 const usersRoute = require('./routes/users');
 const roomsRoute = require('./routes/rooms');
 const messagesRoute = require('./routes/messages');
 
 const app = express();
 
+passportConfig(passport);
 
+app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
