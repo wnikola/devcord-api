@@ -7,14 +7,14 @@ Stack:
 - NodeJS
 - Express
 - MongoDB
+- passport + jsonwebtoken
 
 ## [Documentation](DOCUMENTATION.md)
 
 ## TODO
 
-- [ ] Implement authentication
+- [x] Implement authentication
+- [ ] Better error handling
 - [ ] Fix socket.io implementation
 - [ ] DB migrations
 - [ ] Refactoring
-
-Open to contribuions :)
